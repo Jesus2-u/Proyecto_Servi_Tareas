@@ -36,11 +36,12 @@ public class UsuarioController {
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
-        Usuario usuario = usuarioService.obtenerPorId(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        model.addAttribute("usuario", usuario);
-        return "usuario/formulario";
+        return usuarioService.obtenerPorId(id)
+                .map(usuario -> {
+                    model.addAttribute("usuario", usuario);
+                    return "usuario/formulario";
+                })
+                .orElse("redirect:/usuarios");
     }
 
     @GetMapping("/eliminar/{id}")
