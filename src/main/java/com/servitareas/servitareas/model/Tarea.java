@@ -24,12 +24,12 @@ public class Tarea {
 
     private String estado = "PENDIENTE";
 
-    @ManyToOne
-    @JoinColumn(name = "proyecto_id", nullable = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "proyecto_id", nullable = true)
     private Proyecto proyecto;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_asignado_id", nullable = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "usuario_asignado_id", nullable = true)
     private Usuario usuarioAsignado;
 
     public Tarea() {
