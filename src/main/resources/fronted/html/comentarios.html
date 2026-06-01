@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentarios - ServiTareas</title>
+
+    <link rel="stylesheet" href="/src/main/resources/fronted/css/comentarios.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <img src="/fronted/Imagenes/Oso.webp" alt="Logo">
+            <h2>Servi-Tareas</h2>
+        </div>
+
+        <nav>
+
+            <a href="dashboard.html">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </a>
+
+            <a href="usuarios.html">
+                <i class="fas fa-user"></i>
+                Usuarios
+            </a>
+
+
+            <a class="active" href="comentarios.html">
+                <i class="fas fa-comments"></i>
+                Comentarios
+            </a>
+
+                     <a href="tareas.html">
+                <i class="fas fa-list-check"></i>
+                Tareas
+            </a>
+
+            <a href="registro.html">
+                <i class="fas fa-right-from-bracket"></i>
+                Cerrar Sesión
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="contenido">
+
+        <h1>Gestión de Comentarios</h1>
+
+        <div class="formulario">
+
+            <select id="usuario">
+                <option value="">Seleccione Usuario</option>
+                <option>Fiorella</option>
+                <option>Darwin</option>
+                <option>Yemile</option>
+                <option>Jesus</option>
+            </select>
+
+            <select id="tarea">
+                <option value="">Seleccione Tarea</option>
+                <option>Diseño Frontend</option>
+                <option>CRUD Usuarios</option>
+                <option>Dashboard</option>
+            </select>
+
+            <textarea
+                id="comentario"
+                placeholder="Escriba un comentario"></textarea>
+
+            <button onclick="agregarComentario()">
+                Agregar Comentario
+            </button>
+
+        </div>
+
+        <div class="tabla">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Tarea</th>
+                        <th>Comentario</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+
+                <tbody id="listaComentarios">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+
+function agregarComentario() {
+
+    let usuario = document.getElementById("usuario").value;
+    let tarea = document.getElementById("tarea").value;
+    let comentario = document.getElementById("comentario").value;
+
+    if(usuario === ""){
+        alert("Seleccione un usuario");
+        return;
+    }
+
+    if(tarea === ""){
+        alert("Seleccione una tarea");
+        return;
+    }
+
+    if(comentario.trim() === ""){
+        alert("Ingrese un comentario");
+        return;
+    }
+
+    let fecha = new Date().toLocaleString();
+
+    let fila = `
+        <tr>
+            <td>${usuario}</td>
+            <td>${tarea}</td>
+            <td>${comentario}</td>
+            <td>${fecha}</td>
+        </tr>
+    `;
+
+    document.getElementById("listaComentarios").innerHTML += fila;
+
+    document.getElementById("comentario").value = "";
+
+}
+
+</script>
+
+</body>
+</html>

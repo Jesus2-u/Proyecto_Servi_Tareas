@@ -1,0 +1,168 @@
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#12002b;
+    color:white;
+}
+
+/* CONTENEDOR GENERAL */
+.contenedor{
+    display:flex;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:230px;
+    background:#0b0020;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* LOGO */
+.logo{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.logo img{
+    width:70px;
+    height:70px;
+    object-fit:contain;
+}
+
+.logo h2{
+    margin-top:10px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+/* MENÚ */
+.sidebar nav{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.sidebar nav a{
+    text-decoration:none;
+    color:white;
+    padding:14px 16px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:.3s;
+    font-size:15px;
+}
+
+.sidebar nav a:hover{
+    background:#25104d;
+}
+
+/* BOTÓN ACTIVO */
+.sidebar nav a.active{
+    background:linear-gradient(
+        90deg,
+        #7b2cff,
+        #4f8cff
+    );
+}
+
+/* CONTENIDO */
+.contenido{
+    flex:1;
+    padding:40px;
+}
+
+/* TÍTULO */
+h1{
+    margin-bottom:25px;
+    font-size:32px;
+}
+
+/* FORMULARIO */
+.formulario{
+    background:#1b0638;
+    padding:25px;
+    border-radius:18px;
+    margin-bottom:30px;
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.formulario select,
+.formulario textarea{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:white;
+    color:black;
+    font-size:15px;
+}
+
+.formulario textarea{
+    height:120px;
+    resize:none;
+}
+
+/* BOTÓN */
+.formulario button{
+    background:linear-gradient(
+        90deg,
+        #7b2cff,
+        #4f8cff
+    );
+
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.formulario button:hover{
+    opacity:0.9;
+}
+
+/* TABLA */
+.tabla{
+    background:#1b0638;
+    padding:20px;
+    border-radius:18px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#2a0b54;
+}
+
+th{
+    padding:15px;
+    text-align:left;
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #3c2069;
+}
+
+tr:hover{
+    background:#25104d;
+}
