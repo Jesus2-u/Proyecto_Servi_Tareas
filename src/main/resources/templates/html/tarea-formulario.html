@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea - ServiTareas</title>
+
+    <link rel="stylesheet" th:href="@{/css/registro.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="form-section">
+
+        <h2 th:text="${tarea.idTarea == null ? 'Registro de Tarea' : 'Editar Tarea'}"></h2>
+
+        <form th:action="@{/tareas/guardar}" th:object="${tarea}" method="post">
+
+            <input type="hidden" th:field="*{idTarea}"/>
+
+            <div class="input-group">
+                <label>Título</label>
+                <input type="text"
+                       th:field="*{titulo}"
+                       placeholder="Ingrese título de la tarea"
+                       required>
+            </div>
+
+            <div class="input-group">
+                <label>Descripción</label>
+                <input type="text"
+                       th:field="*{descripcion}"
+                       placeholder="Ingrese descripción">
+            </div>
+
+            <div class="input-group">
+                <label>Fecha Límite</label>
+                <input type="date" th:field="*{fechaLimite}">
+            </div>
+
+            <div class="input-group">
+                <label>Prioridad</label>
+                <select th:field="*{prioridad}">
+                    <option value="BAJA">Baja</option>
+                    <option value="MEDIA">Media</option>
+                    <option value="ALTA">Alta</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Estado</label>
+                <select th:field="*{estado}">
+                    <option value="PENDIENTE">Pendiente</option>
+                    <option value="EN_PROCESO">En Proceso</option>
+                    <option value="COMPLETADA">Completada</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Proyecto</label>
+
+                <select th:field="*{proyecto.idProyecto}">
+                    <option value="">Sin Proyecto</option>
+
+                    <option th:each="proyecto : ${proyectos}"
+                            th:value="${proyecto.idProyecto}"
+                            th:text="${proyecto.nombre}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Usuario Asignado</label>
+
+                <select th:field="*{usuarioAsignado.idUsuario}">
+                    <option value="">Sin Asignar</option>
+
+                    <option th:each="usuario : ${usuarios}"
+                            th:value="${usuario.idUsuario}"
+                            th:text="${usuario.nombre + ' ' + usuario.apellido}">
+                    </option>
+                </select>
+            </div>
+
+            <button type="submit"
+                    th:text="${tarea.idTarea == null ? 'Guardar Tarea' : 'Actualizar Tarea'}">
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="info-section">
+
+        <img th:src="@{/Imagenes/Oso.webp}" alt="Oso ServiTareas">
+
+        <h1>Servi-Tareas</h1>
+
+        <p>
+            Organiza, asigna y controla tareas
+            de forma rápida y eficiente.
+        </p>
+
+        <p class="slogan">
+            Gestiona usuarios, proyectos y tareas
+            desde una sola plataforma.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

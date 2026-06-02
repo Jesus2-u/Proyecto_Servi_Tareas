@@ -19,13 +19,13 @@ public class UsuarioController {
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("usuarios", usuarioService.listarUsuarios());
-        return "usuario/lista";
+        return "html/usuarios";
     }
 
     @GetMapping("/nuevo")
-    public String mostrarFormulario(Model model) {
+    public String nuevo(Model model) {
         model.addAttribute("usuario", new Usuario());
-        return "usuario/formulario";
+        return "html/registro";
     }
 
     @PostMapping("/guardar")
@@ -36,12 +36,11 @@ public class UsuarioController {
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
-        return usuarioService.obtenerPorId(id)
-                .map(usuario -> {
-                    model.addAttribute("usuario", usuario);
-                    return "usuario/formulario";
-                })
-                .orElse("redirect:/usuarios");
+        Usuario usuario = usuarioService.obtenerPorId(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        model.addAttribute("usuario", usuario);
+        return "html/registro";
     }
 
     @GetMapping("/eliminar/{id}")
