@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - ServiTareas</title>
+
+<link rel="stylesheet" href="/src/main/resources/fronted/css/dashboard.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <img src="/fronted/Imagenes/Oso.webp" alt="Oso">
+            <h2>Servi-Tareas</h2>
+        </div>
+
+        <nav>
+
+            <a class="active" href="#">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </a>
+
+             <a href="usuarios.html">
+                <i class="fas fa-user"></i>
+                Usuarios
+            </a>
+
+
+
+          <a href="comentarios.html">
+                <i class="fas fa-comments"></i>
+                Comentarios
+            </a>
+
+            
+            <a href="tareas.html">
+                <i class="fas fa-list-check"></i>
+                tareas
+            </a>
+
+              <a href="registro.html">
+                <i class="fas fa-right-from-bracket"></i>
+                Cerrar Sesión
+            </a>
+
+
+
+
+        </nav>
+
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="contenido">
+
+        <header>
+
+            <h1>Dashboard</h1>
+
+            <div class="usuario">
+                Bienvenido👋
+            </div>
+
+        </header>
+
+        <!-- TARJETAS -->
+
+        <section class="cards">
+
+            <div class="card">
+                <i class="fas fa-folder"></i>
+                <h3>12</h3>
+                <p>Proyectos</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-list-check"></i>
+                <h3>48</h3>
+                <p>Tareas</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-clock"></i>
+                <h3>15</h3>
+                <p>Pendientes</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-check-circle"></i>
+                <h3>33</h3>
+                <p>Completadas</p>
+            </div>
+
+        </section>
+
+        <!-- GRAFICO FALSO -->
+
+        <section class="grafico">
+
+            <h2>Progreso de Tareas</h2>
+
+            <div class="barras">
+
+                <div class="barra">
+                    <div style="height:60%"></div>
+                    <span>Lun</span>
+                </div>
+
+                <div class="barra">
+                    <div style="height:85%"></div>
+                    <span>Mar</span>
+                </div>
+
+                <div class="barra">
+                    <div style="height:40%"></div>
+                    <span>Mie</span>
+                </div>
+
+                <div class="barra">
+                    <div style="height:95%"></div>
+                    <span>Jue</span>
+                </div>
+
+                <div class="barra">
+                    <div style="height:75%"></div>
+                    <span>Vie</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- TABLA DE TAREAS -->
+
+        <section class="tabla">
+
+            <h2>Últimas Tareas</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Prioridad</th>
+                        <th>Estado</th>
+                        <th>Fecha Límite</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Diseño Frontend</td>
+                        <td>Alta</td>
+                        <td><span class="pendiente">Pendiente</span></td>
+                        <td>10/06/2026</td>
+                    </tr>
+
+                    <tr>
+                        <td>CRUD Usuarios</td>
+                        <td>Media</td>
+                        <td><span class="proceso">En proceso</span></td>
+                        <td>12/06/2026</td>
+                    </tr>
+
+                    <tr>
+                        <td>Pruebas Backend</td>
+                        <td>Baja</td>
+                        <td><span class="completa">Completada</span></td>
+                        <td>15/06/2026</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
