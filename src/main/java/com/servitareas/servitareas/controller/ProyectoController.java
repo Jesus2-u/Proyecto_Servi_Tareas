@@ -2,56 +2,67 @@ package com.servitareas.servitareas.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.servitareas.servitareas.model.Proyecto;
 import com.servitareas.servitareas.service.ProyectoService;
+import com.servitareas.servitareas.service.UsuarioService;
 
 @Controller
 @RequestMapping("/proyectos")
 public class ProyectoController {
 
     private final ProyectoService proyectoService;
+    private final UsuarioService usuarioService;
 
-    public ProyectoController(ProyectoService proyectoService) {
+    public ProyectoController(
+            ProyectoService proyectoService,
+            UsuarioService usuarioService) {
+
         this.proyectoService = proyectoService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("proyectos", proyectoService.listarProyectos());
-        return "proyecto/lista"; // Ruta de la vista HTML que crearán después
+        return "html/proyectos";
     }
 
     @GetMapping("/nuevo")
-    public String mostrarFormulario(Model model) {
-        model.addAttribute("proyecto", new Proyecto());
-        return "proyecto/formulario";
-    }
+    public String nuevo(Model model) {
 
-    @PostMapping("/guardar")
-    public String guardar(@ModelAttribute Proyecto proyecto) {
-        proyectoService.guardarProyecto(proyecto);
-        return "redirect:/proyectos";
+        model.addAttribute("proyecto", new Proyecto());
+        model.addAttribute("usuarios", usuarioService.listarUsuarios());
+
+        return "html/proyecto-formulario";
     }
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
-        return proyectoService.obtenerPorId(id)
-                .map(proyecto -> {
-                    model.addAttribute("proyecto", proyecto);
-                    return "proyecto/formulario";
-                })
-                .orElse("redirect:/proyectos");
+
+        Proyecto proyecto = proyectoService.obtenerPorId(id)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+        model.addAttribute("proyecto", proyecto);
+        model.addAttribute("usuarios", usuarioService.listarUsuarios());
+
+        return "html/proyecto-formulario";
+    }
+
+    @PostMapping("/guardar")
+    public String guardar(@ModelAttribute Proyecto proyecto) {
+
+        proyectoService.guardarProyecto(proyecto);
+
+        return "redirect:/proyectos";
     }
 
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
+
         proyectoService.eliminarProyecto(id);
+
         return "redirect:/proyectos";
     }
 }

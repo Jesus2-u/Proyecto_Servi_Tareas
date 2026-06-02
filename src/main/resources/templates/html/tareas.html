@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tareas - ServiTareas</title>
+
+<link rel="stylesheet" th:href="@{/css/usuarios.css}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <img th:src="@{/Imagenes/Oso.webp}" alt="Oso">
+            <h2>Servi-Tareas</h2>
+        </div>
+
+        <nav>
+
+            <a th:href="@{/dashboard}">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </a>
+
+            <a th:href="@{/usuarios}">
+                <i class="fas fa-user"></i>
+                Usuarios
+            </a>
+
+            <a th:href="@{/comentarios}">
+                <i class="fas fa-comments"></i>
+                Comentarios
+            </a>
+
+            <a th:href="@{/proyectos}">
+                <i class="fas fa-diagram-project"></i>
+                Proyectos
+            </a>
+
+            <a class="active" th:href="@{/tareas}">
+                <i class="fas fa-list-check"></i>
+                Tareas
+            </a>
+
+            <a th:href="@{/registro}">
+                <i class="fas fa-right-from-bracket"></i>
+                Cerrar Sesión
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <main class="contenido">
+
+        <div class="encabezado">
+
+            <h1>Gestión de Tareas</h1>
+
+            <a class="btn-nuevo" th:href="@{/tareas/nuevo}">
+                <i class="fas fa-plus"></i>
+                Nueva Tarea
+            </a>
+
+        </div>
+
+        <div class="tabla-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Prioridad</th>
+                        <th>Estado</th>
+                        <th>Fecha Límite</th>
+                        <th>Proyecto</th>
+                        <th>Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr th:each="tarea : ${tareas}">
+
+                        <td th:text="${tarea.idTarea}"></td>
+
+                        <td th:text="${tarea.titulo}"></td>
+
+                        <td th:text="${tarea.prioridad}"></td>
+
+                        <td th:text="${tarea.estado}"></td>
+
+                        <td th:text="${tarea.fechaLimite}"></td>
+
+                        <td th:text="${tarea.proyecto != null ? tarea.proyecto.nombre : 'Sin Proyecto'}"></td>
+
+                        <td th:text="${tarea.usuarioAsignado != null ? tarea.usuarioAsignado.nombre : 'Sin Asignar'}"></td>
+
+                        <td>
+
+                            <a class="editar"
+                               th:href="@{/tareas/editar/{id}(id=${tarea.idTarea})}">
+                                Editar
+                            </a>
+
+                            <a class="eliminar"
+                               th:href="@{/tareas/eliminar/{id}(id=${tarea.idTarea})}"
+                               onclick="return confirm('¿Seguro que deseas eliminar esta tarea?')">
+                                Eliminar
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

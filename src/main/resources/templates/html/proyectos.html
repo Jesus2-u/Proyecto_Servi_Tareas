@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Proyectos - ServiTareas</title>
+
+<!-- MISMO CSS DE USUARIOS -->
+<link rel="stylesheet" th:href="@{/css/usuarios.css}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR (igual que usuarios para consistencia) -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <img th:src="@{/Imagenes/Oso.webp}" alt="Oso">
+            <h2>Servi-Tareas</h2>
+        </div>
+
+        <nav>
+
+            <a th:href="@{/dashboard}">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </a>
+
+            <a th:href="@{/usuarios}">
+                <i class="fas fa-user"></i>
+                Usuarios
+            </a>
+
+            <a th:href="@{/comentarios}">
+                <i class="fas fa-comments"></i>
+                Comentarios
+            </a>
+
+            <a class="active" th:href="@{/proyectos}">
+                <i class="fas fa-diagram-project"></i>
+                Proyectos
+            </a>
+
+            <a th:href="@{/tareas}">
+                <i class="fas fa-list-check"></i>
+                Tareas
+            </a>
+
+            <a th:href="@{/registro}">
+                <i class="fas fa-right-from-bracket"></i>
+                Cerrar Sesión
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="contenido">
+
+        <div class="encabezado">
+
+            <h1>Gestión de Proyectos</h1>
+
+            <!-- BOTÓN NUEVO -->
+            <a class="btn-nuevo" th:href="@{/proyectos/nuevo}">
+                <i class="fas fa-plus"></i>
+                Nuevo Proyecto
+            </a>
+
+        </div>
+
+        <div class="tabla-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr th:each="proyecto : ${proyectos}">
+
+                        <td th:text="${proyecto.idProyecto}"></td>
+                        <td th:text="${proyecto.nombre}"></td>
+                        <td th:text="${proyecto.descripcion}"></td>
+<td th:text="${#temporals.format(proyecto.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
+
+                        <td>
+<span class="activo"
+      th:text="${proyecto.estado != null and proyecto.estado == 'ACTIVO' ? 'Activo' : 'Inactivo'}">
+</span>
+                        </td>
+
+                        <td>
+
+                            <!-- EDITAR -->
+                            <a class="editar"
+                               th:href="@{/proyectos/editar/{id}(id=${proyecto.idProyecto})}">
+                                Editar
+                            </a>
+
+                            <!-- ELIMINAR -->
+                            <a class="eliminar"
+                               th:href="@{/proyectos/eliminar/{id}(id=${proyecto.idProyecto})}"
+                               onclick="return confirm('¿Seguro que deseas eliminar este proyecto?')">
+                                Eliminar
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

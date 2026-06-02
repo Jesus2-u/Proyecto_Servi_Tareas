@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto - ServiTareas</title>
+
+    <link rel="stylesheet" th:href="@{/css/registro.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- FORMULARIO -->
+    <div class="form-section">
+
+        <h2 th:text="${proyecto.idProyecto == null ? 'Registro de Proyecto' : 'Editar Proyecto'}"></h2>
+
+        <form th:action="@{/proyectos/guardar}" th:object="${proyecto}" method="post">
+
+            <!-- ID oculto para edición -->
+            <input type="hidden" th:field="*{idProyecto}"/>
+
+            <div class="input-group">
+                <label>Nombre del Proyecto</label>
+                <input type="text"
+                       th:field="*{nombre}"
+                       placeholder="Ingrese nombre del proyecto"
+                       required>
+            </div>
+
+            <div class="input-group">
+                <label>Descripción</label>
+                <input type="text"
+                       th:field="*{descripcion}"
+                       placeholder="Ingrese descripción">
+            </div>
+
+            <div class="input-group">
+                <label>Fecha Límite</label>
+                <input type="date" th:field="*{fechaLimite}">
+            </div>
+
+            <div class="input-group">
+                <label>Estado</label>
+                <select th:field="*{estado}">
+                    <option value="ACTIVO">Activo</option>
+                    <option value="INACTIVO">Inactivo</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Usuario Creador</label>
+
+                <select th:field="*{usuarioCreador.idUsuario}" required>
+
+                    <option value="">Seleccione un usuario</option>
+
+                    <option th:each="usuario : ${usuarios}"
+                            th:value="${usuario.idUsuario}"
+                            th:text="${usuario.nombre + ' ' + usuario.apellido}">
+                    </option>
+
+                </select>
+            </div>
+
+            <button type="submit"
+                    th:text="${proyecto.idProyecto == null ? 'Guardar Proyecto' : 'Actualizar Proyecto'}">
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- INFORMACIÓN -->
+    <div class="info-section">
+
+        <img th:src="@{/Imagenes/Oso.webp}" alt="Oso ServiTareas">
+
+        <h1>Servi-Tareas</h1>
+
+        <p>
+            Organiza tus proyectos de forma eficiente,
+            controlando tareas y avances.
+        </p>
+
+        <p class="slogan">
+            Gestiona proyectos, usuarios y tareas
+            desde una sola plataforma.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
