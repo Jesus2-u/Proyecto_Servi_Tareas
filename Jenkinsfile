@@ -14,7 +14,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Ejecutando pruebas unitarias...'
-                bat 'mvnw.cmd clean test' 
+                bat 'call mvnw.cmd clean test'
             }
         }
 
