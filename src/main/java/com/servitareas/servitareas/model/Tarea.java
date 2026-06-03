@@ -11,17 +11,11 @@ public class Tarea {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTarea;
-
     private String titulo;
-
     private String descripcion;
-
     private LocalDateTime fechaCreacion = LocalDateTime.now();
-
     private LocalDate fechaLimite;
-
     private String prioridad;
-
     private String estado = "PENDIENTE";
 
     @ManyToOne(optional = true)
