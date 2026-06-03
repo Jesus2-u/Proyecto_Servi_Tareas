@@ -1,134 +1,150 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Tareas - ServiTareas</title>
-
-<link rel="stylesheet" th:href="@{/css/usuarios.css}">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas - ServiTareas</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/tareas.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<div class="container">
+<div class="contenedor-app">
 
     <aside class="sidebar">
-
         <div class="logo">
-            <img th:src="@{/Imagenes/Oso.webp}" alt="Oso">
+            <div class="brand-icon-wrapper">
+                <img th:src="@{/Imagenes/Oso.webp}" alt="Oso" class="brand-bear">
+            </div>
             <h2>Servi-Tareas</h2>
         </div>
 
-        <nav>
-
+        <nav class="nav-links">
             <a th:href="@{/dashboard}">
-                <i class="fas fa-chart-line"></i>
-                Dashboard
+                <i class="fas fa-chart-line"></i><span>Dashboard</span>
             </a>
-
             <a th:href="@{/usuarios}">
-                <i class="fas fa-user"></i>
-                Usuarios
+                <i class="fas fa-user"></i><span>Usuarios</span>
             </a>
-
             <a th:href="@{/comentarios}">
-                <i class="fas fa-comments"></i>
-                Comentarios
+                <i class="fas fa-comments"></i><span>Comentarios</span>
             </a>
-
             <a th:href="@{/proyectos}">
-                <i class="fas fa-diagram-project"></i>
-                Proyectos
+                <i class="fas fa-diagram-project"></i><span>Proyectos</span>
             </a>
-
             <a class="active" th:href="@{/tareas}">
-                <i class="fas fa-list-check"></i>
-                Tareas
+                <i class="fas fa-list-check"></i><span>Tareas</span>
             </a>
-
-            <a th:href="@{/registro}">
-                <i class="fas fa-right-from-bracket"></i>
-                Cerrar Sesión
+            <div class="nav-spacer"></div>
+            <a th:href="@{/logout}" class="btn-logout">
+                <i class="fas fa-right-from-bracket"></i><span>Cerrar Sesión</span>
             </a>
-
         </nav>
-
     </aside>
 
-    <main class="contenido">
+    <main class="contenido-main">
+        
+        <header class="content-header">
+            <div class="header-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Filtrar por título, responsable o prioridad...">
+            </div>
+            <div class="user-profile-top">
+                <span class="user-name">Organizador de Flujo</span>
+                <div class="avatar-mini"></div>
+            </div>
+        </header>
 
-        <div class="encabezado">
-
-            <h1>Gestión de Tareas</h1>
-
-            <a class="btn-nuevo" th:href="@{/tareas/nuevo}">
-                <i class="fas fa-plus"></i>
-                Nueva Tarea
+        <section class="welcome-banner">
+            <div class="banner-text">
+                <h1>Gestión de Tareas</h1>
+                <p>Monitorea el progreso de los entregables pendientes, ajusta prioridades y gestiona asignaciones.</p>
+            </div>
+            
+            <a class="btn-primary" th:href="@{/tareas/nuevo}">
+                <i class="fas fa-plus"></i> Nueva Tarea
             </a>
+        </section>
 
-        </div>
+        <section class="workspace-section">
+            <div class="table-container-card">
+                <div class="table-clean-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 60px;">ID</th>
+                                <th>Título de la Tarea</th>
+                                <th>Proyecto Asociado</th>
+                                <th>Asignado A</th>
+                                <th>Prioridad</th>
+                                <th>Estado</th>
+                                <th>Fecha Límite</th>
+                                <th style="text-align: center; width: 130px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="tarea : ${tareas}">
+                                <td class="task-date-cell" th:text="${'#' + tarea.idTarea}">#1</td>
+                                <td class="task-title-cell" th:text="${tarea.titulo}">Implementar endpoints de control</td>
+                                <td>
+                                    <div class="project-tag-cell">
+                                        <i class="far fa-folder"></i>
+                                        <span th:text="${tarea.proyecto != null ? tarea.proyecto.nombre : 'Sin Proyecto'}">E-Commerce</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="user-assignee-cell">
+                                        <div class="user-bullet-avatar"></div>
+                                        <span th:text="${tarea.usuarioAsignado != null ? tarea.usuarioAsignado.nombre : 'Sin Asignar'}">Yemile F.</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span th:class="'badge badge-priority ' + ${#strings.toLowerCase(tarea.prioridad)}"
+                                          th:text="${tarea.prioridad}">ALTA</span>
+                                </td>
+                                <td>
+                                    <span th:class="'badge badge-status ' + ${#strings.toLowerCase(#strings.replace(tarea.estado,' ','-'))}"
+                                          th:text="${tarea.estado}">En Progreso</span>
+                                </td>
+                                <td class="task-date-cell" th:text="${tarea.fechaLimite}">15 Jun 2026</td>
+                                <td>
+                                    <div class="action-buttons-group">
+                                        <a class="action-btn edit-btn" 
+                                           th:href="@{/tareas/editar/{id}(id=${tarea.idTarea})}"
+                                           title="Editar Tarea">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a class="action-btn delete-btn" 
+                                           th:href="@{/tareas/eliminar/{id}(id=${tarea.idTarea})}"
+                                           onclick="return confirm('¿Seguro que deseas eliminar esta tarea?')"
+                                           title="Eliminar Tarea">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
 
-        <div class="tabla-container">
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Título</th>
-                        <th>Prioridad</th>
-                        <th>Estado</th>
-                        <th>Fecha Límite</th>
-                        <th>Proyecto</th>
-                        <th>Usuario</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr th:each="tarea : ${tareas}">
-
-                        <td th:text="${tarea.idTarea}"></td>
-
-                        <td th:text="${tarea.titulo}"></td>
-
-                        <td th:text="${tarea.prioridad}"></td>
-
-                        <td th:text="${tarea.estado}"></td>
-
-                        <td th:text="${tarea.fechaLimite}"></td>
-
-                        <td th:text="${tarea.proyecto != null ? tarea.proyecto.nombre : 'Sin Proyecto'}"></td>
-
-                        <td th:text="${tarea.usuarioAsignado != null ? tarea.usuarioAsignado.nombre : 'Sin Asignar'}"></td>
-
-                        <td>
-
-                            <a class="editar"
-                               th:href="@{/tareas/editar/{id}(id=${tarea.idTarea})}">
-                                Editar
-                            </a>
-
-                            <a class="eliminar"
-                               th:href="@{/tareas/eliminar/{id}(id=${tarea.idTarea})}"
-                               onclick="return confirm('¿Seguro que deseas eliminar esta tarea?')">
-                                Eliminar
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
+                            <tr th:if="${#lists.isEmpty(tareas)}">
+                                <td class="task-date-cell">#25</td>
+                                <td class="task-title-cell">Ajustar estilos CSS de componentes</td>
+                                <td><div class="project-tag-cell"><i class="far fa-folder"></i><span>Core App</span></div></td>
+                                <td><div class="user-assignee-cell"><div class="user-bullet-avatar"></div><span>Admin</span></div></td>
+                                <td><span class="badge badge-priority media">MEDIA</span></td>
+                                <td><span class="badge badge-status en-progreso">En Progreso</span></td>
+                                <td class="task-date-cell">Mañana</td>
+                                <td>
+                                    <div class="action-buttons-group">
+                                        <a class="action-btn edit-btn" href="#"><i class="fas fa-pen"></i></a>
+                                        <a class="action-btn delete-btn" href="#"><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
     </main>
 

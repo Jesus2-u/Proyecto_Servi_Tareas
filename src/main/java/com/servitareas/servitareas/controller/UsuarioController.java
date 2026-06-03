@@ -2,6 +2,7 @@ package com.servitareas.servitareas.controller;
 
 import com.servitareas.servitareas.model.Usuario;
 import com.servitareas.servitareas.service.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +30,11 @@ public class UsuarioController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute Usuario usuario) {
-        usuarioService.guardarUsuario(usuario);
-        return "redirect:/usuarios";
+    public String guardar(@ModelAttribute Usuario usuario, HttpSession session) {
+        Usuario saved = usuarioService.guardarUsuario(usuario);
+        // Iniciar sesión automáticamente tras registro (sesión mínima)
+        session.setAttribute("userEmail", saved.getCorreo());
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/editar/{id}")

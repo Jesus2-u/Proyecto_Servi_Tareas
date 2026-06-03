@@ -1,135 +1,139 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Proyectos - ServiTareas</title>
-
-<!-- MISMO CSS DE USUARIOS -->
-<link rel="stylesheet" th:href="@{/css/usuarios.css}">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos - ServiTareas</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/proyectos.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<div class="container">
+<div class="contenedor-app">
 
-    <!-- SIDEBAR (igual que usuarios para consistencia) -->
     <aside class="sidebar">
-
         <div class="logo">
-            <img th:src="@{/Imagenes/Oso.webp}" alt="Oso">
+            <div class="brand-icon-wrapper">
+                <img th:src="@{/Imagenes/Oso.webp}" alt="Oso" class="brand-bear">
+            </div>
             <h2>Servi-Tareas</h2>
         </div>
 
-        <nav>
-
+        <nav class="nav-links">
             <a th:href="@{/dashboard}">
-                <i class="fas fa-chart-line"></i>
-                Dashboard
+                <i class="fas fa-chart-line"></i><span>Dashboard</span>
             </a>
-
             <a th:href="@{/usuarios}">
-                <i class="fas fa-user"></i>
-                Usuarios
+                <i class="fas fa-user"></i><span>Usuarios</span>
             </a>
-
             <a th:href="@{/comentarios}">
-                <i class="fas fa-comments"></i>
-                Comentarios
+                <i class="fas fa-comments"></i><span>Comentarios</span>
             </a>
-
             <a class="active" th:href="@{/proyectos}">
-                <i class="fas fa-diagram-project"></i>
-                Proyectos
+                <i class="fas fa-diagram-project"></i><span>Proyectos</span>
             </a>
-
             <a th:href="@{/tareas}">
-                <i class="fas fa-list-check"></i>
-                Tareas
+                <i class="fas fa-list-check"></i><span>Tareas</span>
             </a>
-
-            <a th:href="@{/registro}">
-                <i class="fas fa-right-from-bracket"></i>
-                Cerrar Sesión
+            <div class="nav-spacer"></div>
+            <a th:href="@{/logout}" class="btn-logout">
+                <i class="fas fa-right-from-bracket"></i><span>Cerrar Sesión</span>
             </a>
-
         </nav>
-
     </aside>
 
-    <!-- CONTENIDO -->
-    <main class="contenido">
+    <main class="contenido-main">
+        
+        <header class="content-header">
+            <div class="header-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar por nombre de proyecto...">
+            </div>
+            <div class="user-profile-top">
+                <span class="user-name">Módulos de Control</span>
+                <div class="avatar-mini"></div>
+            </div>
+        </header>
 
-        <div class="encabezado">
-
-            <h1>Gestión de Proyectos</h1>
-
-            <!-- BOTÓN NUEVO -->
-            <a class="btn-nuevo" th:href="@{/proyectos/nuevo}">
-                <i class="fas fa-plus"></i>
-                Nuevo Proyecto
+        <section class="welcome-banner">
+            <div class="banner-text">
+                <h1>Gestión de Proyectos</h1>
+                <p>Monitorea los entornos globales de trabajo, estados operativos y horizontes temporales de entrega.</p>
+            </div>
+            
+            <a class="btn-primary" th:href="@{/proyectos/nuevo}">
+                <i class="fas fa-plus"></i> Nuevo Proyecto
             </a>
+        </section>
 
-        </div>
+        <section class="workspace-section">
+            <div class="table-container-card">
+                <div class="table-clean-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">ID</th>
+                                <th>Nombre del Proyecto</th>
+                                <th style="width: 40%;">Descripción</th>
+                                <th>Fecha Creación</th>
+                                <th>Estado</th>
+                                <th style="text-align: center; width: 130px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="proyecto : ${proyectos}">
+                                <td class="task-date-cell" th:text="${'#' + proyecto.idProyecto}">#1</td>
+                                <td class="project-title-cell">
+                                    <div class="project-folder-icon">
+                                        <i class="fas fa-folder"></i>
+                                    </div>
+                                    <span th:text="${proyecto.nombre}">Sistema Importaciones</span>
+                                </td>
+                                <td class="project-desc-cell" th:text="${proyecto.descripcion}">Descripción base de ejemplo para la interfaz del sistema operativo.</td>
+                                <td class="task-date-cell" th:text="${#temporals.format(proyecto.fechaCreacion, 'dd/MM/yyyy HH:mm')}">01/06/2026 14:30</td>
+                                <td>
+                                    <span th:class="${proyecto.estado != null and proyecto.estado == 'ACTIVO'} ? 'badge badge-status active-status' : 'badge badge-status inactive-status'"
+                                          th:text="${proyecto.estado != null and proyecto.estado == 'ACTIVO' ? 'Activo' : 'Inactivo'}">Activo</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons-group">
+                                        <a class="action-btn edit-btn" 
+                                           th:href="@{/proyectos/editar/{id}(id=${proyecto.idProyecto})}"
+                                           title="Editar Proyecto">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a class="action-btn delete-btn" 
+                                           th:href="@{/proyectos/eliminar/{id}(id=${proyecto.idProyecto})}"
+                                           onclick="return confirm('¿Seguro que deseas eliminar este proyecto?')"
+                                           title="Eliminar Proyecto">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
 
-        <div class="tabla-container">
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr th:each="proyecto : ${proyectos}">
-
-                        <td th:text="${proyecto.idProyecto}"></td>
-                        <td th:text="${proyecto.nombre}"></td>
-                        <td th:text="${proyecto.descripcion}"></td>
-<td th:text="${#temporals.format(proyecto.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
-
-                        <td>
-<span class="activo"
-      th:text="${proyecto.estado != null and proyecto.estado == 'ACTIVO' ? 'Activo' : 'Inactivo'}">
-</span>
-                        </td>
-
-                        <td>
-
-                            <!-- EDITAR -->
-                            <a class="editar"
-                               th:href="@{/proyectos/editar/{id}(id=${proyecto.idProyecto})}">
-                                Editar
-                            </a>
-
-                            <!-- ELIMINAR -->
-                            <a class="eliminar"
-                               th:href="@{/proyectos/eliminar/{id}(id=${proyecto.idProyecto})}"
-                               onclick="return confirm('¿Seguro que deseas eliminar este proyecto?')">
-                                Eliminar
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
+                            <tr th:if="${#lists.isEmpty(proyectos)}">
+                                <td class="task-date-cell">#0</td>
+                                <td class="project-title-cell">
+                                    <div class="project-folder-icon"><i class="fas fa-folder"></i></div>
+                                    <span>Proyecto Demo ServiTareas</span>
+                                </td>
+                                <td class="project-desc-cell">Espacio de trabajo inicial para pruebas locales de integración de componentes.</td>
+                                <td class="task-date-cell">03/06/2026 01:00</td>
+                                <td><span class="badge badge-status active-status">Activo</span></td>
+                                <td>
+                                    <div class="action-buttons-group">
+                                        <a class="action-btn edit-btn" href="#"><i class="fas fa-pen"></i></a>
+                                        <a class="action-btn delete-btn" href="#"><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
     </main>
 

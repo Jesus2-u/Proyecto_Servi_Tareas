@@ -1,169 +1,187 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard - ServiTareas</title>
-
-<link rel="stylesheet" th:href="@{/css/dashboard.css}">
-
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ServiTareas</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<div class="container">
+<div class="contenedor-app">
 
-    <!-- MENU LATERAL -->
+    <!-- MENU LATERAL (Mismo diseño exacto, sin alterar) -->
     <aside class="sidebar">
-
         <div class="logo">
-            <img th:src="@{/Imagenes/Oso.webp}" alt="Oso">
+            <div class="brand-icon-wrapper">
+                <img th:src="@{/Imagenes/Oso.webp}" alt="Oso" class="brand-bear">
+            </div>
             <h2>Servi-Tareas</h2>
         </div>
 
-        <nav>
-
+        <nav class="nav-links">
             <a class="active" th:href="@{/dashboard}">
-                <i class="fas fa-chart-line"></i>
-                Dashboard
+                <i class="fas fa-chart-line"></i><span>Dashboard</span>
             </a>
-
             <a th:href="@{/usuarios}">
-                <i class="fas fa-user"></i>
-                Usuarios
+                <i class="fas fa-user"></i><span>Usuarios</span>
             </a>
-<a th:href="@{/proyectos}">
-    <i class="fas fa-folder-open"></i>
-    Proyectos
-</a>
+            <a th:href="@{/proyectos}">
+                <i class="fas fa-folder-open"></i><span>Proyectos</span>
+            </a>
             <a th:href="@{/comentarios}">
-                <i class="fas fa-comments"></i>
-                Comentarios
+                <i class="fas fa-comments"></i><span>Comentarios</span>
             </a>
-
             <a th:href="@{/tareas}">
-                <i class="fas fa-list-check"></i>
-                Tareas
+                <i class="fas fa-list-check"></i><span>Tareas</span>
             </a>
-
-            <a th:href="@{/registro}">
-                <i class="fas fa-right-from-bracket"></i>
-                Cerrar Sesión
+            <div class="nav-spacer"></div>
+            <a th:href="@{/logout}" class="btn-logout">
+                <i class="fas fa-right-from-bracket"></i><span>Cerrar Sesión</span>
             </a>
-
         </nav>
-
     </aside>
 
-    <!-- CONTENIDO -->
-    <main class="contenido">
-
-        <header>
-
-            <h1>Dashboard</h1>
-
-            <div class="usuario">
-                Bienvenido 👋
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenido-main">
+        
+        <!-- CABECERA TOP -->
+        <header class="content-header">
+            <div class="header-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar métricas, proyectos...">
             </div>
-
+            <div class="user-profile-top">
+                <span class="user-name">Bienvenido 👋</span>
+                <div class="avatar-mini"></div>
+            </div>
         </header>
 
-        <!-- TARJETAS -->
-        <section class="cards">
+        <!-- SECCIÓN DE TITULO -->
+        <section class="welcome-banner">
+            <div class="banner-text">
+                <h1>Panel de Control</h1>
+                <p>Aquí tienes el resumen del estado actual de tus proyectos y rendimiento del equipo.</p>
+            </div>
+        </section>
 
-            <div class="card">
-                <i class="fas fa-folder"></i>
-                <h3 th:text="${totalProyectos}">0</h3>
-                <p>Proyectos</p>
+        <!-- INDICADORES / METRICAS (Bloques lila y blancos con bordes morados) -->
+        <section class="stats-dashboard-grid">
+            
+            <div class="metric-card">
+                <div class="metric-icon purple-subtle"><i class="fas fa-folder"></i></div>
+                <div class="metric-info">
+                    <p class="metric-label">Proyectos Activos</p>
+                    <h3 class="metric-value" th:text="${totalProyectos}">12</h3>
+                </div>
             </div>
 
-            <div class="card">
-                <i class="fas fa-list-check"></i>
-                <h3 th:text="${totalTareas}">0</h3>
-                <p>Tareas</p>
+            <div class="metric-card">
+                <div class="metric-icon purple-subtle"><i class="fas fa-list-check"></i></div>
+                <div class="metric-info">
+                    <p class="metric-label">Total Tareas</p>
+                    <h3 class="metric-value" th:text="${totalTareas}">48</h3>
+                </div>
             </div>
 
-            <div class="card">
-                <i class="fas fa-clock"></i>
-                <h3 th:text="${tareasPendientes}">0</h3>
-                <p>Pendientes</p>
+            <div class="metric-card alert-pending">
+                <div class="metric-icon"><i class="fas fa-clock"></i></div>
+                <div class="metric-info">
+                    <p class="metric-label">Tareas Pendientes</p>
+                    <h3 class="metric-value" th:text="${tareasPendientes}">9</h3>
+                </div>
             </div>
 
-            <div class="card">
-                <i class="fas fa-check-circle"></i>
-                <h3 th:text="${tareasCompletadas}">0</h3>
-                <p>Completadas</p>
+            <div class="metric-card alert-success">
+                <div class="metric-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="metric-info">
+                    <p class="metric-label">Completadas</p>
+                    <h3 class="metric-value" th:text="${tareasCompletadas}">39</h3>
+                </div>
             </div>
 
         </section>
 
-        <!-- GRAFICO -->
-        <section class="grafico">
+        <!-- PANEL DE DOS COLUMNAS: GRÁFICO Y TABLA -->
+        <div class="dashboard-workspace">
+            
+            <!-- CONTENEDOR DEL GRÁFICO MINIMALISTA -->
+            <section class="chart-container-card">
+                <div class="card-header-minimal">
+                    <h2>Progreso Semanal</h2>
+                    <p class="text-muted">Rendimiento de entregas</p>
+                </div>
+                
+                <div class="bar-chart-wrapper">
+                    <div class="chart-bars">
+                        <div class="bar-column">
+                            <div class="bar-fill" style="height:60%"></div>
+                            <span class="bar-label">Lun</span>
+                        </div>
+                        <div class="bar-column">
+                            <div class="bar-fill active" style="height:85%"></div>
+                            <span class="bar-label">Mar</span>
+                        </div>
+                        <div class="bar-column">
+                            <div class="bar-fill" style="height:40%"></div>
+                            <span class="bar-label">Mié</span>
+                        </div>
+                        <div class="bar-column">
+                            <div class="bar-fill active" style="height:95%"></div>
+                            <span class="bar-label">Jue</span>
+                        </div>
+                        <div class="bar-column">
+                            <div class="bar-fill" style="height:75%"></div>
+                            <span class="bar-label">Vie</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-            <h2>Progreso de Tareas</h2>
-
-            <div class="barras">
-
-                <div class="barra">
-                    <div style="height:60%"></div>
-                    <span>Lun</span>
+            <!-- CONTENEDOR DE LA TABLA ESTILIZADA -->
+            <section class="table-container-card">
+                <div class="card-header-minimal">
+                    <h2>Últimas Tareas</h2>
+                    <p class="text-muted">Últimas actualizaciones del sistema</p>
                 </div>
 
-                <div class="barra">
-                    <div style="height:85%"></div>
-                    <span>Mar</span>
+                <div class="table-clean-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título de la Tarea</th>
+                                <th>Prioridad</th>
+                                <th>Estado</th>
+                                <th>Fecha Límite</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Ejemplo estático preparado para iteración en Thymeleaf -->
+                            <tr th:each="t : ${ultimasTareas}">
+                                <td class="task-title-cell" th:text="${t.titulo}">Diseño del Frontend Base</td>
+                                <td>
+                                    <span class="badge badge-priority" th:text="${t.prioridad}">Alta</span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-status" th:text="${t.estado}">En Progreso</span>
+                                </td>
+                                <td class="task-date-cell" th:text="${t.fechaLimite}">08 Jun 2026</td>
+                            </tr>
+                            <!-- Fila de respaldo visual si Thymeleaf está vacío en desarrollo básico -->
+                            <tr th:if="${#lists.isEmpty(ultimasTareas)}">
+                                <td class="task-title-cell">Ajustar paleta lila pastel</td>
+                                <td><span class="badge badge-priority">Media</span></td>
+                                <td><span class="badge badge-status done">Completado</span></td>
+                                <td class="task-date-cell">Hoy</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </section>
 
-                <div class="barra">
-                    <div style="height:40%"></div>
-                    <span>Mie</span>
-                </div>
-
-                <div class="barra">
-                    <div style="height:95%"></div>
-                    <span>Jue</span>
-                </div>
-
-                <div class="barra">
-                    <div style="height:75%"></div>
-                    <span>Vie</span>
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- TABLA -->
-        <section class="tabla">
-
-            <h2>Últimas Tareas</h2>
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Prioridad</th>
-                        <th>Estado</th>
-                        <th>Fecha Límite</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr th:each="t : ${ultimasTareas}">
-                        <td th:text="${t.titulo}"></td>
-                        <td th:text="${t.prioridad}"></td>
-                        <td th:text="${t.estado}"></td>
-                        <td th:text="${t.fechaLimite}"></td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
+        </div>
 
     </main>
 

@@ -3,80 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - ServiTareas</title>
-
+    <title>Proyecto - ServiTareas</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <link rel="stylesheet" th:href="@{/css/registro.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<div class="container">
+<div class="contenedor-app">
 
-    <!-- FORMULARIO -->
-    <div class="form-section">
-
-        <!-- TÍTULO DINÁMICO (CREAR / EDITAR) -->
-        <h2 th:text="${usuario.idUsuario == null ? 'Registro de Usuario' : 'Editar Usuario'}"></h2>
-
-        <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
-
-            <!-- IMPORTANTE: para editar correctamente -->
-            <input type="hidden" th:field="*{idUsuario}"/>
-
-            <div class="input-group">
-                <label>Nombre</label>
-                <input type="text" th:field="*{nombre}" placeholder="Ingrese su nombre">
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="brand-icon-wrapper">
+                <img th:src="@{/Imagenes/Oso.webp}" alt="Oso" class="brand-bear">
             </div>
+            <h2>Servi-Tareas</h2>
+        </div>
 
-            <div class="input-group">
-                <label>Apellido</label>
-                <input type="text" th:field="*{apellido}" placeholder="Ingrese su apellido">
+        <nav class="nav-links">
+            <a th:href="@{/dashboard}">
+                <i class="fas fa-chart-line"></i><span>Dashboard</span>
+            </a>
+            <a th:href="@{/usuarios}">
+                <i class="fas fa-user"></i><span>Usuarios</span>
+            </a>
+            <a class="active" th:href="@{/proyectos}">
+                <i class="fas fa-folder-open"></i><span>Proyectos</span>
+            </a>
+            <a th:href="@{/comentarios}">
+                <i class="fas fa-comments"></i><span>Comentarios</span>
+            </a>
+            <a th:href="@{/tareas}">
+                <i class="fas fa-list-check"></i><span>Tareas</span>
+            </a>
+            <div class="nav-spacer"></div>
+            <a th:href="@{/logout}" class="btn-logout">
+                <i class="fas fa-right-from-bracket"></i><span>Cerrar Sesión</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="contenido-main">
+        
+        <header class="content-header">
+            <div class="header-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar en proyectos...">
             </div>
-
-            <div class="input-group">
-                <label>Correo Electrónico</label>
-                <input type="email" th:field="*{correo}" placeholder="correo@ejemplo.com">
+            <div class="user-profile-top">
+                <span class="user-name">Yemile Flores</span>
+                <div class="avatar-mini"></div>
             </div>
+        </header>
 
-            <div class="input-group">
-                <label>Contraseña</label>
-                <input type="password" th:field="*{password}" placeholder="Ingrese contraseña">
-            </div>
+        <div class="dashboard-workspace">
+            
+            <section class="card-form-wrapper">
+                <h3 th:text="${proyecto.idProyecto == null ? '➕ Registro de Proyecto' : '📝 Editar Proyecto'}">Registro de Proyecto</h3>
+                
+                <form th:action="@{/proyectos/guardar}" th:object="${proyecto}" method="post" class="formulario-clean">
+                    
+                    <input type="hidden" th:field="*{idProyecto}"/>
 
-            <div class="input-group">
-                <label>Estado</label>
-                <select th:field="*{estado}">
-                    <option th:value="true">Activo</option>
-                    <option th:value="false">Inactivo</option>
-                </select>
-            </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-project-diagram"></i> Nombre del Proyecto</label>
+                        <input type="text" 
+                               th:field="*{nombre}" 
+                               placeholder="Ej. Rediseño de MIVAR Dashboard" 
+                               required>
+                    </div>
 
-            <!-- BOTÓN DINÁMICO -->
-            <button type="submit"
-                    th:text="${usuario.idUsuario == null ? 'Guardar Usuario' : 'Actualizar Usuario'}">
-            </button>
+                    <div class="input-group">
+                        <label><i class="fas fa-align-left"></i> Descripción Breve</label>
+                        <textarea th:field="*{descripcion}" 
+                                  placeholder="Detalla los objetivos del proyecto y el alcance general..."></textarea>
+                    </div>
 
-        </form>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label><i class="fas fa-calendar-alt"></i> Fecha Límite</label>
+                            <input type="date" th:field="*{fechaLimite}" required>
+                        </div>
 
-    </div>
+                        <div class="input-group">
+                            <label><i class="fas fa-toggle-on"></i> Estado Inicial</label>
+                            <select th:field="*{estado}">
+                                <option value="ACTIVO">Activo</option>
+                                <option value="INACTIVO">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
 
-    <!-- INFORMACIÓN -->
-    <div class="info-section">
+                    <div class="input-group">
+                        <label><i class="fas fa-user-shield"></i> Lider / Usuario Creador</label>
+                        <select th:field="*{usuarioCreador.idUsuario}" required>
+                            <option value="">Seleccione un líder de proyecto</option>
+                            <option th:each="usuario : ${usuarios}"
+                                    th:value="${usuario.idUsuario}"
+                                    th:text="${usuario.nombre + ' ' + usuario.apellido}">
+                                Juan Pérez
+                            </option>
+                        </select>
+                    </div>
 
-        <img th:src="@{/Imagenes/Oso.webp}" alt="Oso ServiTareas">
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> 
+                            <span th:text="${proyecto.idProyecto == null ? 'Guardar Proyecto' : 'Actualizar Proyecto'}">Guardar Proyecto</span>
+                        </button>
+                        <a th:href="@{/dashboard}" class="btn-secondary">Cancelar</a>
+                    </div>
 
-        <h1>Servi-Tareas</h1>
+                </form>
+            </section>
 
-        <p>
-            Organiza, asigna y cumple tus tareas
-            de forma rápida y eficiente.
-        </p>
+            <section class="info-pastel-card">
+                <div class="bear-brand-container">
+                    <div class="bear-illustration-frame">
+                        <img th:src="@{/Imagenes/Oso.webp}" alt="Oso ServiTareas">
+                    </div>
+                </div>
+                
+                <div class="info-text-content">
+                    <h1>Servi-Tareas</h1>
+                    <p class="subtitle-app">Panel de Gestión de Proyectos</p>
+                    
+                    <div class="divider-line"></div>
+                    
+                    <ul class="benefit-list">
+                        <li>
+                            <div class="benefit-bullet"><i class="fas fa-check"></i></div>
+                            <p>Organiza tus proyectos de forma eficiente controlando flujos de trabajo.</p>
+                        </li>
+                        <li>
+                            <div class="benefit-bullet"><i class="fas fa-check"></i></div>
+                            <p>Asigna responsables directos para garantizar la transparencia del equipo.</p>
+                        </li>
+                        <li>
+                            <div class="benefit-bullet"><i class="fas fa-check"></i></div>
+                            <p>Establece fechas límites claras alineadas con tus variables de control.</p>
+                        </li>
+                    </ul>
 
-        <p class="slogan">
-            Gestiona proyectos, usuarios y tareas
-            desde una sola plataforma.
-        </p>
+                    <div class="footer-badge-slogan">
+                        <i class="fas fa-layer-group"></i> <span>Todo desde una sola plataforma unificada.</span>
+                    </div>
+                </div>
+            </section>
 
-    </div>
+        </div>
+
+    </main>
 
 </div>
 

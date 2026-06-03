@@ -1,21 +1,21 @@
 (function() {
-    // Obtener elementos para validación básica y feedback profesional
-    const form = document.getElementById('loginForm');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
+    const cardWrapper = document.getElementById('cardWrapper');
+    const loginFormContainer = document.getElementById('loginFormContainer');
+    const registerFormContainer = document.getElementById('registerFormContainer');
+    const showRegisterBtn = document.getElementById('showRegisterBtn');
+    const showLoginBtn = document.getElementById('showLoginBtn');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
 
-    // Simular registro (interacción amigable manteniendo profesionalismo)
-    const registerLink = document.getElementById('registerMock');
-    if (registerLink) {
-        registerLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Notificación moderna y sutil (sin alert intrusivo)
-            showFloatingMessage('✨ Próximamente: abre tu cuenta en Servi-Tareas', '#7C3AED');
-        });
-    }
+    const loginEmail = document.getElementById('loginEmail');
+    const loginPassword = document.getElementById('loginPassword');
+    const regName = document.getElementById('regName');
+    const regEmail = document.getElementById('regEmail');
+    const regPhone = document.getElementById('regPhone');
+    const regPassword = document.getElementById('regPassword');
+    const regApellido = document.getElementById('regApellido');
 
-    // Función para mensajes flotantes estilizados (no invasivos)
-    function showFloatingMessage(msg, color = '#3B82F6') {
+    function showMessage(msg, color = '#3B82F6') {
         const existing = document.querySelector('.custom-toast-message');
         if (existing) existing.remove();
 
@@ -49,36 +49,91 @@
         }, 2800);
     }
 
-    if (form) {
-        form.addEventListener('submit', (e) => {
+    function enableRegisterMode() {
+        cardWrapper.classList.add('register-mode');
+        loginFormContainer.classList.add('hide');
+        loginFormContainer.classList.remove('active');
+        registerFormContainer.classList.add('active');
+        registerFormContainer.style.display = 'block';
+    }
+
+    function enableLoginMode() {
+        cardWrapper.classList.remove('register-mode');
+        loginFormContainer.classList.remove('hide');
+        loginFormContainer.classList.add('active');
+        registerFormContainer.classList.remove('active');
+        registerFormContainer.style.display = 'none';
+    }
+
+    if (showRegisterBtn) {
+        showRegisterBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
+            enableRegisterMode();
+        });
+    }
+
+    if (showLoginBtn) {
+        showLoginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            enableLoginMode();
+        });
+    }
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            const email = loginEmail.value.trim();
+            const pass = loginPassword.value.trim();
 
             if (!email) {
-                showFloatingMessage('📧 Ingresa un correo electrónico válido', '#F97316');
-                emailInput.focus();
+                e.preventDefault();
+                showMessage('📧 Ingresa tu correo electrónico', '#F97316');
+                loginEmail.focus();
                 return;
             }
             if (!email.includes('@') || !email.includes('.')) {
-                showFloatingMessage('⚠️ Formato de correo incorrecto', '#F97316');
-                emailInput.focus();
+                e.preventDefault();
+                showMessage('⚠️ Formato de correo incorrecto', '#F97316');
+                loginEmail.focus();
                 return;
             }
-            if (!password) {
-                showFloatingMessage('🔒 Escribe tu contraseña para continuar', '#F97316');
-                passwordInput.focus();
+            if (!pass) {
+                e.preventDefault();
+                showMessage('🔒 Escribe tu contraseña', '#F97316');
+                loginPassword.focus();
                 return;
             }
-            if (password.length < 6) {
-                showFloatingMessage('🔒 La contraseña debe tener al menos 6 caracteres', '#F97316');
-                passwordInput.focus();
+            showMessage('✅ Iniciando sesión...', '#10B981');
+        });
+    }
+
+    if (registerForm) {
+        registerForm.addEventListener('submit', (e) => {
+            const name = regName.value.trim();
+            const email = regEmail.value.trim();
+            const pwd = regPassword.value.trim();
+
+            if (!name) {
+                e.preventDefault();
+                showMessage('👤 Ingresa tu nombre completo', '#F97316');
+                regName.focus();
+                return;
+            }
+            if (!email || !email.includes('@') || !email.includes('.')) {
+                e.preventDefault();
+                showMessage('📧 Ingresa un correo electrónico válido', '#F97316');
+                regEmail.focus();
+                return;
+            }
+            if (!pwd || pwd.length < 4) {
+                e.preventDefault();
+                showMessage('🔒 La contraseña debe tener al menos 4 caracteres', '#F97316');
+                regPassword.focus();
                 return;
             }
 
-            setTimeout(() => {
-                alert('Demostración interactiva • Has iniciado sesión correctamente.\nBienvenido al ecosistema Servi-Tareas.');
-            }, 800);
+            const parts = name.split(' ').filter(Boolean);
+            regApellido.value = parts.length > 1 ? parts.slice(1).join(' ') : '';
+            showMessage('🎉 Registro listo, enviando...', '#A78BFA');
         });
     }
 
@@ -92,49 +147,30 @@
         });
     });
 
-    const bearElement = document.querySelector('.bear-sleeping');
-    if (bearElement) {
-        bearElement.addEventListener('mouseenter', () => {
-            // Acción sutil opcional, no interrumpe animación.
-        });
-    }
-
     const style = document.createElement('style');
     style.textContent = `
-            .bear-sleeping {
-                will-change: transform;
-            }
-            .droplet {
-                will-change: opacity, transform;
-            }
-            .custom-toast-message {
-                transition: opacity 0.25s ease;
-                pointer-events: none;
-                font-weight: 500;
-                background: #1A1C28;
-                border: 1px solid rgba(255,255,255,0.08);
-            }
-            .input-group.focused-effect label {
-                color: #A78BFA;
-            }
+            .bear-sleeping { will-change: transform; }
+            .droplet { will-change: opacity, transform; }
+            .custom-toast-message { transition: opacity 0.25s ease; pointer-events: none; font-weight: 500; background: #1A1C28; border: 1px solid rgba(255,255,255,0.08); }
+            .input-group.focused-effect label { color: #A78BFA; }
         `;
     document.head.appendChild(style);
-
-    const leftArm = document.querySelector('.arm.left');
-    const rightArm = document.querySelector('.arm.right');
-    if (leftArm && rightArm) {
-        // Ajuste dinámico sencillo para una sensación de abrazo.
-    }
 
     const loginBtn = document.querySelector('.btn-login');
     if (loginBtn) {
         loginBtn.addEventListener('click', () => {
             loginBtn.style.transform = 'scale(0.97)';
-            setTimeout(() => {
-                if (loginBtn) loginBtn.style.transform = '';
-            }, 150);
+            setTimeout(() => { if (loginBtn) loginBtn.style.transform = ''; }, 150);
         });
     }
 
-    console.log('Interfaz Servi-Tareas | Login moderna con oso polar animado');
+    const registerBtn = document.querySelector('.btn-register');
+    if (registerBtn) {
+        registerBtn.addEventListener('click', () => {
+            registerBtn.style.transform = 'scale(0.97)';
+            setTimeout(() => { if (registerBtn) registerBtn.style.transform = ''; }, 150);
+        });
+    }
+
+    enableLoginMode();
 })();

@@ -1,124 +1,148 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Usuarios - ServiTareas</title>
-
-<link rel="stylesheet" th:href="@{/css/usuarios.css}">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios - ServiTareas</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/usuarios.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<div class="container">
+<div class="contenedor-app">
 
+    <!-- MENU LATERAL (Idéntico e inalterable) -->
     <aside class="sidebar">
-
         <div class="logo">
-            <img th:src="@{/Imagenes/Oso.webp}" alt="Oso">
+            <div class="brand-icon-wrapper">
+                <img th:src="@{/Imagenes/Oso.webp}" alt="Oso" class="brand-bear">
+            </div>
             <h2>Servi-Tareas</h2>
         </div>
 
-        <nav>
-
+        <nav class="nav-links">
             <a th:href="@{/dashboard}">
-                <i class="fas fa-chart-line"></i>
-                Dashboard
+                <i class="fas fa-chart-line"></i><span>Dashboard</span>
             </a>
-
             <a class="active" th:href="@{/usuarios}">
-                <i class="fas fa-user"></i>
-                Usuarios
+                <i class="fas fa-user"></i><span>Usuarios</span>
             </a>
-
             <a th:href="@{/comentarios}">
-                <i class="fas fa-comments"></i>
-                Comentarios
+                <i class="fas fa-comments"></i><span>Comentarios</span>
             </a>
-
             <a th:href="@{/tareas}">
-                <i class="fas fa-list-check"></i>
-                Tareas
+                <i class="fas fa-list-check"></i><span>Tareas</span>
             </a>
-
-            <a th:href="@{/registro}">
-                <i class="fas fa-right-from-bracket"></i>
-                Cerrar Sesión
+            <div class="nav-spacer"></div>
+            <a th:href="@{/logout}" class="btn-logout">
+                <i class="fas fa-right-from-bracket"></i><span>Cerrar Sesión</span>
             </a>
-
         </nav>
-
     </aside>
 
-    <main class="contenido">
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenido-main">
+        
+        <!-- CABECERA TOP CON BUSCADOR -->
+        <header class="content-header">
+            <div class="header-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar usuarios por nombre o correo...">
+            </div>
+            <div class="user-profile-top">
+                <span class="user-name">Panel de Administración</span>
+                <div class="avatar-mini"></div>
+            </div>
+        </header>
 
-        <div class="encabezado">
-            <h1>Gestión de Usuarios</h1>
-
-            <!-- IR AL FORMULARIO (CREAR) -->
-            <a class="btn-nuevo" th:href="@{/usuarios/nuevo}">
-                <i class="fas fa-plus"></i>
-                Nuevo Usuario
+        <!-- SECCIÓN DE TITULO Y ACCIÓN ACCESIBLE -->
+        <section class="welcome-banner">
+            <div class="banner-text">
+                <h1>Gestión de Usuarios</h1>
+                <p>Administra las cuentas de los miembros de tu equipo, controla sus accesos y estados.</p>
+            </div>
+            
+            <!-- Botón estilizado Soft Violet -->
+            <a class="btn-primary" th:href="@{/usuarios/nuevo}">
+                <i class="fas fa-user-plus"></i> Nuevo Usuario
             </a>
-        </div>
+        </section>
 
-        <div class="tabla-container">
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Correo</th>
-                        <th>Fecha Registro</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr th:each="usuario : ${usuarios}">
-                        <td th:text="${usuario.idUsuario}"></td>
-                        <td th:text="${usuario.nombre}"></td>
-                        <td th:text="${usuario.apellido}"></td>
-                        <td th:text="${usuario.correo}"></td>
-                        <td th:text="${usuario.fechaRegistro}"></td>
-
-                        <td>
-                            <span class="activo"
-                                  th:text="${usuario.estado ? 'Activo' : 'Inactivo'}"></span>
-                        </td>
-
-                        <td>
-
-                            <!-- EDITAR -->
-                            <a class="editar"
-                               th:href="@{/usuarios/editar/{id}(id=${usuario.idUsuario})}">
-                                Editar
-                            </a>
-
-                            <!-- ELIMINAR -->
-                            <a class="eliminar"
-                               th:href="@{/usuarios/eliminar/{id}(id=${usuario.idUsuario})}"
-                               onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">
-                                Eliminar
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
+        <!-- TABLA CONTENEDORA DE USUARIOS -->
+        <section class="workspace-section">
+            <div class="table-container-card">
+                <div class="table-clean-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">ID</th>
+                                <th>Miembro del Equipo</th>
+                                <th>Correo Electrónico</th>
+                                <th>Fecha Registro</th>
+                                <th>Estado</th>
+                                <th style="text-align: center; width: 160px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Iteración dinámica con Thymeleaf -->
+                            <tr th:each="usuario : ${usuarios}">
+                                <td class="task-date-cell" th:text="${'#' + usuario.idUsuario}">#1</td>
+                                <td class="user-profile-cell">
+                                    <!-- Avatar circular con inicial estilizada -->
+                                    <div class="avatar-initials" th:text="${#strings.substring(usuario.nombre,0,1)}">U</div>
+                                    <div class="user-info-text">
+                                        <span class="user-fullname" th:text="${usuario.nombre + ' ' + usuario.apellido}">Nombre Apellido</span>
+                                    </div>
+                                </td>
+                                <td th:text="${usuario.correo}">correo@servitareas.com</td>
+                                <td class="task-date-cell" th:text="${usuario.fechaRegistro}">01 Jun 2026</td>
+                                <td>
+                                    <!-- Badge condicional usando las alertas suavizadas de la guía de estilos -->
+                                    <span th:class="${usuario.estado} ? 'badge badge-status done' : 'badge badge-status-inactive'"
+                                          th:text="${usuario.estado ? 'Activo' : 'Inactivo'}">Activo</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons-group">
+                                        <!-- Botón Editar -->
+                                        <a class="action-btn edit-btn" 
+                                           th:href="@{/usuarios/editar/{id}(id=${usuario.idUsuario})}"
+                                           title="Editar Usuario">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <!-- Botón Eliminar -->
+                                        <a class="action-btn delete-btn" 
+                                           th:href="@{/usuarios/eliminar/{id}(id=${usuario.idUsuario})}"
+                                           onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"
+                                           title="Eliminar Usuario">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <!-- Fila de ejemplo estático de respaldo si no hay datos cargados en local -->
+                            <tr th:if="${#lists.isEmpty(usuarios)}">
+                                <td class="task-date-cell">#12</td>
+                                <td class="user-profile-cell">
+                                    <div class="avatar-initials">Y</div>
+                                    <div class="user-info-text"><span class="user-fullname">Yemile Flores</span></div>
+                                </td>
+                                <td>yemile@servitareas.com</td>
+                                <td class="task-date-cell">03 Jun 2026</td>
+                                <td><span class="badge badge-status done">Activo</span></td>
+                                <td>
+                                    <div class="action-buttons-group">
+                                        <a class="action-btn edit-btn" href="#"><i class="fas fa-pen"></i></a>
+                                        <a class="action-btn delete-btn" href="#"><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
     </main>
 
