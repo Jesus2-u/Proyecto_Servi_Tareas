@@ -28,13 +28,16 @@ public class UsuarioControllerIntegrationTest {
     @MockitoBean
     private UsuarioService usuarioService;
 
+    private final String USER_SESSION = "userEmail";
+
     @Test
     void listarUsuariosDebeRetornarVistaUsuarios() throws Exception {
 
         when(usuarioService.listarUsuarios())
                 .thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/usuarios"))
+        mockMvc.perform(get("/usuarios")
+                .sessionAttr(USER_SESSION, "test@test.com"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("html/usuarios"))
                 .andExpect(model().attributeExists("usuarios"));
@@ -43,7 +46,8 @@ public class UsuarioControllerIntegrationTest {
     @Test
     void nuevoUsuarioDebeRetornarFormulario() throws Exception {
 
-        mockMvc.perform(get("/usuarios/nuevo"))
+        mockMvc.perform(get("/usuarios/nuevo")
+                .sessionAttr(USER_SESSION, "test@test.com"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("html/registro"))
                 .andExpect(model().attributeExists("usuario"));
@@ -59,7 +63,8 @@ public class UsuarioControllerIntegrationTest {
         when(usuarioService.obtenerPorId(1L))
                 .thenReturn(Optional.of(usuario));
 
-        mockMvc.perform(get("/usuarios/editar/1"))
+        mockMvc.perform(get("/usuarios/editar/1")
+                .sessionAttr(USER_SESSION, "test@test.com"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("html/registro"))
                 .andExpect(model().attributeExists("usuario"));
@@ -75,13 +80,14 @@ public class UsuarioControllerIntegrationTest {
                 .thenReturn(usuario);
 
         mockMvc.perform(post("/usuarios/guardar")
+                .sessionAttr(USER_SESSION, "test@test.com")
                 .param("nombre", "Juan")
                 .param("apellido", "Perez")
                 .param("correo", "juan@test.com")
                 .param("password", "123456")
                 .param("estado", "true"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/usuarios"));
+                .andExpect(redirectedUrl("/dashboard"));
     }
 
     @Test
@@ -89,7 +95,8 @@ public class UsuarioControllerIntegrationTest {
 
         doNothing().when(usuarioService).eliminarUsuario(1L);
 
-        mockMvc.perform(get("/usuarios/eliminar/1"))
+        mockMvc.perform(get("/usuarios/eliminar/1")
+                .sessionAttr(USER_SESSION, "test@test.com"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/usuarios"));
 

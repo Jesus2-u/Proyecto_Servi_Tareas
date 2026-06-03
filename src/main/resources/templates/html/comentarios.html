@@ -21,13 +21,16 @@
         </div>
 
         <nav class="nav-links">
-            <a th:href="@{/dashboard}">
+            <a class="active" th:href="@{/dashboard}">
                 <i class="fas fa-chart-line"></i><span>Dashboard</span>
             </a>
             <a th:href="@{/usuarios}">
                 <i class="fas fa-user"></i><span>Usuarios</span>
             </a>
-            <a class="active" th:href="@{/comentarios}">
+            <a th:href="@{/proyectos}">
+                <i class="fas fa-folder-open"></i><span>Proyectos</span>
+            </a>
+            <a th:href="@{/comentarios}">
                 <i class="fas fa-comments"></i><span>Comentarios</span>
             </a>
             <a th:href="@{/tareas}">

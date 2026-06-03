@@ -21,12 +21,15 @@
             <h2>Servi-Tareas</h2>
         </div>
 
-        <nav class="nav-links">
-            <a th:href="@{/dashboard}">
+         <nav class="nav-links">
+            <a class="active" th:href="@{/dashboard}">
                 <i class="fas fa-chart-line"></i><span>Dashboard</span>
             </a>
-            <a class="active" th:href="@{/usuarios}">
+            <a th:href="@{/usuarios}">
                 <i class="fas fa-user"></i><span>Usuarios</span>
+            </a>
+            <a th:href="@{/proyectos}">
+                <i class="fas fa-folder-open"></i><span>Proyectos</span>
             </a>
             <a th:href="@{/comentarios}">
                 <i class="fas fa-comments"></i><span>Comentarios</span>

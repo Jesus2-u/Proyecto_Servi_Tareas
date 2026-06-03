@@ -32,7 +32,6 @@ public class UsuarioController {
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute Usuario usuario, HttpSession session) {
         Usuario saved = usuarioService.guardarUsuario(usuario);
-        // Iniciar sesión automáticamente tras registro (sesión mínima)
         session.setAttribute("userEmail", saved.getCorreo());
         return "redirect:/dashboard";
     }
