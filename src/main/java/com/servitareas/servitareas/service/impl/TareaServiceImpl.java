@@ -56,4 +56,8 @@ public class TareaServiceImpl implements TareaService {
     public void eliminarTarea(Long id) {
         tareaRepository.deleteById(id);
     }
+        @Override
+    public List<Tarea> listarPorEstado(String estado) {
+        return tareaRepository.findByEstado(estado);
+    }
 }
