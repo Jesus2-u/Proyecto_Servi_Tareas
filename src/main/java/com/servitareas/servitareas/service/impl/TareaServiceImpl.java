@@ -44,7 +44,7 @@ public class TareaServiceImpl implements TareaService {
         existente.setFechaLimite(tarea.getFechaLimite());
         existente.setPrioridad(tarea.getPrioridad());
         existente.setEstado(tarea.getEstado());
-        
+
         // Actualizamos las relaciones con otras tablas
         existente.setProyecto(tarea.getProyecto());
         existente.setUsuarioAsignado(tarea.getUsuarioAsignado());
@@ -55,5 +55,10 @@ public class TareaServiceImpl implements TareaService {
     @Override
     public void eliminarTarea(Long id) {
         tareaRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Tarea> listarPorEstado(String estado) {
+        return tareaRepository.findByEstado(estado);
     }
 }
