@@ -1,7 +1,7 @@
 
 package com.servitareas.servitareas.controller;
 
-import com.servitareas.servitareas.model.Usuario;
+// import com.servitareas.servitareas.model.Usuario;
 import com.servitareas.servitareas.repository.UsuarioRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
