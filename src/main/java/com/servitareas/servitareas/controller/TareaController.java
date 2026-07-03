@@ -39,6 +39,17 @@ public class TareaController {
     }
 
     // =========================
+    // LISTA POR ESTADO
+    // =========================
+    @GetMapping("/estado/{estado}")
+    public String listarPorEstado(@PathVariable String estado, Model model) {
+
+        model.addAttribute("tareas", tareaService.listarPorEstado(estado));
+
+        return "html/tareas";
+    }
+
+    // =========================
     // FORMULARIO NUEVO
     // =========================
     @GetMapping("/nuevo")
