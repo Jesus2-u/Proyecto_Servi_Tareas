@@ -1,156 +1,179 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comentarios - ServiTareas</title>
-
-    <link rel="stylesheet" href="/src/main/resources/templates/css/comentarios.css">
-
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/comentarios.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
 <body>
 
-<div class="contenedor">
+<div class="contenedor-app">
 
-    <!-- MENU LATERAL -->
     <aside class="sidebar">
-
         <div class="logo">
-            <img src="/templates/Imagenes/Oso.webp" alt="Logo">
+            <div class="brand-icon-wrapper">
+                <img th:src="@{/Imagenes/Oso.webp}" alt="Logo" class="brand-bear">
+            </div>
             <h2>Servi-Tareas</h2>
         </div>
 
-        <nav>
-
-            <a href="dashboard.html">
-                <i class="fas fa-chart-line"></i>
-                Dashboard
+        <nav class="nav-links">
+            <a class="active" th:href="@{/dashboard}">
+                <i class="fas fa-chart-line"></i><span>Dashboard</span>
             </a>
-
-            <a href="usuarios.html">
-                <i class="fas fa-user"></i>
-                Usuarios
+            <a th:href="@{/usuarios}">
+                <i class="fas fa-user"></i><span>Usuarios</span>
             </a>
-
-
-            <a class="active" href="comentarios.html">
-                <i class="fas fa-comments"></i>
-                Comentarios
+            <a th:href="@{/proyectos}">
+                <i class="fas fa-folder-open"></i><span>Proyectos</span>
             </a>
-
-                     <a href="tareas.html">
-                <i class="fas fa-list-check"></i>
-                Tareas
+            <a th:href="@{/comentarios}">
+                <i class="fas fa-comments"></i><span>Comentarios</span>
             </a>
-
-            <a href="registro.html">
-                <i class="fas fa-right-from-bracket"></i>
-                Cerrar Sesión
+            <a th:href="@{/tareas}">
+                <i class="fas fa-list-check"></i><span>Tareas</span>
             </a>
-
+            <div class="nav-spacer"></div>
+            <a th:href="@{/logout}" class="btn-logout">
+                <i class="fas fa-right-from-bracket"></i><span>Cerrar Sesión</span>
+            </a>
         </nav>
-
     </aside>
 
-    <!-- CONTENIDO -->
-    <main class="contenido">
+    <main class="contenido-main">
+        
+        <header class="content-header">
+            <div class="header-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar comentarios o tareas...">
+            </div>
+            <div class="user-profile-top">
+                <span class="user-name">Yemile Flores</span>
+                <div class="avatar-mini"></div>
+            </div>
+        </header>
 
-        <h1>Gestión de Comentarios</h1>
+        <section class="welcome-banner">
+            <div class="banner-text">
+                <h1>Gestión de Comentarios</h1>
+                <p>Monitorea y organiza la retroalimentación de las tareas activas de tu equipo.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-comment-dots"></i></div>
+                    <div>
+                        <h3>42</h3>
+                        <p>Totales</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <h3>Hoy</h3>
+                        <p>5 nuevos</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="formulario">
+        <section class="workspace-section">
+            <div class="card-form-wrapper">
+                <h3><i class="fas fa-plus-circle"></i> Nuevo Comentario</h3>
+                <div class="formulario-clean">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="usuario"><i class="fas fa-user-circle"></i> Miembro del Equipo</label>
+                            <select id="usuario">
+                                <option value="">Seleccione Usuario</option>
+                                <option>Fiorella</option>
+                                <option>Darwin</option>
+                                <option>Yemile</option>
+                                <option>Jesus</option>
+                            </select>
+                        </div>
 
-            <select id="usuario">
-                <option value="">Seleccione Usuario</option>
-                <option>Fiorella</option>
-                <option>Darwin</option>
-                <option>Yemile</option>
-                <option>Jesus</option>
-            </select>
+                        <div class="input-group">
+                            <label for="tarea"><i class="fas fa-tasks"></i> Asignar a Tarea</label>
+                            <select id="tarea">
+                                <option value="">Seleccione Tarea</option>
+                                <option>Diseño Frontend</option>
+                                <option>CRUD Usuarios</option>
+                                <option>Dashboard</option>
+                            </select>
+                        </div>
+                    </div>
 
-            <select id="tarea">
-                <option value="">Seleccione Tarea</option>
-                <option>Diseño Frontend</option>
-                <option>CRUD Usuarios</option>
-                <option>Dashboard</option>
-            </select>
+                    <div class="input-group">
+                        <label for="comentario"><i class="fas fa-pen-nib"></i> Mensaje</label>
+                        <textarea id="comentario" placeholder="Describe brevemente el avance o feedback..."></textarea>
+                    </div>
 
-            <textarea
-                id="comentario"
-                placeholder="Escriba un comentario"></textarea>
+                    <button class="btn-primary" onclick="agregarComentario()">
+                        <i class="fas fa-paper-plane"></i> Publicar Comentario
+                    </button>
+                </div>
+            </div>
+        </section>
 
-            <button onclick="agregarComentario()">
-                Agregar Comentario
-            </button>
-
-        </div>
-
-        <div class="tabla">
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Usuario</th>
-                        <th>Tarea</th>
-                        <th>Comentario</th>
-                        <th>Fecha</th>
-                    </tr>
-                </thead>
-
-                <tbody id="listaComentarios">
-                </tbody>
-
-            </table>
-
-        </div>
+        <section class="feed-section">
+            <h2>Historial de Actividad</h2>
+            <div class="comments-feed" id="listaComentarios">
+                <div class="comment-item-card">
+                    <div class="comment-avatar-area">
+                        <div class="bear-avatar-placeholder"></div>
+                    </div>
+                    <div class="comment-content-area">
+                        <div class="comment-meta-header">
+                            <strong class="author-name">Yemile Flores</strong>
+                            <span class="badge-task">Diseño Frontend</span>
+                            <span class="comment-date">Hoy, 10:15 AM</span>
+                        </div>
+                        <p class="comment-text">He completado la integración de los bordes morados y los bloques lila pastel en la interfaz del login. ¡Se ve genial!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </main>
 
 </div>
 
 <script>
-
 function agregarComentario() {
-
     let usuario = document.getElementById("usuario").value;
     let tarea = document.getElementById("tarea").value;
     let comentario = document.getElementById("comentario").value;
 
-    if(usuario === ""){
-        alert("Seleccione un usuario");
-        return;
-    }
+    if(usuario === "") { alert("Seleccione un usuario"); return; }
+    if(tarea === "") { alert("Seleccione una tarea"); return; }
+    if(comentario.trim() === "") { alert("Ingrese un comentario"); return; }
 
-    if(tarea === ""){
-        alert("Seleccione una tarea");
-        return;
-    }
+    let fecha = new Date().toLocaleDateString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-    if(comentario.trim() === ""){
-        alert("Ingrese un comentario");
-        return;
-    }
-
-    let fecha = new Date().toLocaleString();
-
-    let fila = `
-        <tr>
-            <td>${usuario}</td>
-            <td>${tarea}</td>
-            <td>${comentario}</td>
-            <td>${fecha}</td>
-        </tr>
+    let nuevaTarjeta = `
+        <div class="comment-item-card animated-fade-in">
+            <div class="comment-avatar-area">
+                <div class="bear-avatar-placeholder"></div>
+            </div>
+            <div class="comment-content-area">
+                <div class="comment-meta-header">
+                    <strong class="author-name">${usuario}</strong>
+                    <span class="badge-task">${tarea}</span>
+                    <span class="comment-date">${fecha}</span>
+                </div>
+                <p class="comment-text">${comentario}</p>
+            </div>
+        </div>
     `;
 
-    document.getElementById("listaComentarios").innerHTML += fila;
-
+    // Insertar al inicio del feed para ver el nuevo comentario inmediatamente
+    document.getElementById("listaComentarios").insertAdjacentHTML('afterbegin', nuevaTarjeta);
     document.getElementById("comentario").value = "";
-
 }
-
 </script>
 
 </body>

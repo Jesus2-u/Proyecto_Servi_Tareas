@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Servi-Tareas | Login y Registro · Oso Interactivo</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+<div class="login-container">
+    <div class="login-card-wrapper" id="cardWrapper">
+        <div class="polar-bear-area">
+            <div class="bear-sleeping">
+                <div class="bear-illustration">
+                    <div class="bear-body"></div>
+                    <div class="paw-feet">
+                        <div class="foot"></div>
+                        <div class="foot"></div>
+                    </div>
+                    <div class="bear-arms">
+                        <div class="arm left"></div>
+                        <div class="arm right"></div>
+                    </div>
+                    <div class="bear-head">
+                        <div class="ear left"><div class="ear-inner"></div></div>
+                        <div class="ear right"><div class="ear-inner"></div></div>
+                        <div class="eyebrows">
+                            <div class="brow left"></div>
+                            <div class="brow right"></div>
+                        </div>
+                        <div class="eyes">
+                            <div class="eye" id="leftEye"></div>
+                            <div class="eye" id="rightEye"></div>
+                        </div>
+                        <div class="nose"></div>
+                        <div class="mouth" id="bearMouth">
+                            <div class="mouth-cheek"></div>
+                        </div>
+                        <div class="sleeping-bubble"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="forms-container">
+            <div id="loginFormContainer" class="login-form active">
+                <div class="form-title">
+                    <h2>Servi-Tareas</h2>
+                </div>
+                <form id="loginForm" th:action="@{/login}" method="post">
+                    <div class="input-group">
+                        <label>Correo electrónico</label>
+                        <input type="email" id="loginEmail" class="input-field" name="correo" placeholder="usuario@servitareas.com" autocomplete="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="loginPassword" class="input-field" name="password" placeholder="••••••••" autocomplete="current-password" required>
+                    </div>
+                    <button type="submit" class="btn-login">Iniciar sesión →</button>
+                    <div class="toggle-link">
+                        ¿No tienes una cuenta? <a id="showRegisterBtn">Regístrate</a>
+                    </div>
+                    <div class="extra-info">Demo: admin@servitareas.com / cualquier clave</div>
+                </form>
+            </div>
+
+            <div id="registerFormContainer" class="register-form">
+                <div class="form-title">
+                    <h2>Crear cuenta</h2>
+                </div>
+                <form id="registerForm" th:action="@{/usuarios/guardar}" method="post">
+                    <div class="input-group">
+                        <label>Nombre completo</label>
+                        <input type="text" id="regName" class="input-field" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Correo electrónico</label>
+                        <input type="email" id="regEmail" class="input-field" name="correo" placeholder="ejemplo@servitareas.com" autocomplete="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="regPhone" class="input-field" placeholder="Número celular">
+                    </div>
+                    <div class="input-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="regPassword" class="input-field" name="password" placeholder="Mínimo 4 caracteres" required>
+                    </div>
+                    <input type="hidden" id="regApellido" name="apellido" value="">
+                    <input type="hidden" name="estado" value="true">
+                    <button type="submit" class="btn-register">Registrarse →</button>
+                    <div class="toggle-link">
+                        ¿Ya tienes cuenta? <a id="showLoginBtn">Iniciar sesión</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/Login.js}"></script>
+</body>
+</html>

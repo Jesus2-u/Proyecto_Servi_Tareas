@@ -11,5 +11,4 @@ import com.servitareas.servitareas.model.Tarea;
 public interface TareaRepository extends JpaRepository<Tarea, Long> {
 
     List<Tarea> findByEstado(String estado);
-
 }
