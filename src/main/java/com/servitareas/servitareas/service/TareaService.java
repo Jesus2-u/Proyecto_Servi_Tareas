@@ -18,6 +18,5 @@ public interface TareaService {
     void eliminarTarea(Long id);
 
     List<Tarea> listarPorEstado(String estado);
-    
 
 }
