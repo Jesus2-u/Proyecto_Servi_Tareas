@@ -17,6 +17,7 @@ public class TareaServiceImpl implements TareaService {
     public TareaServiceImpl(TareaRepository tareaRepository) {
         this.tareaRepository = tareaRepository;
     }
+    
 
     @Override
     public List<Tarea> listarTareas() {
